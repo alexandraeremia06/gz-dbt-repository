@@ -1,0 +1,70 @@
+ # schema.yml
+
+version: 2
+
+sources:
+  - name: gz_raw_data
+    database: data-analytics-ae
+    schema: gz_raw_data
+    loader: bigquery
+    description: test
+    freshness:
+       warn_after: {count: 12, period: hour}
+       error_after: {count: 24, period: hour}
+    tables:
+      - name: product
+        identifier: raw_gz_product_copy
+        description: The price each product_id cost in purchase_price
+        columns:
+           - name: products_id
+             description: ID of the product
+           - name: purchSE_PRICE
+             description: Selling price of each product
+             tests: 
+             - not_null
+             - unique
+             
+      - name: sales
+        identifier: raw_gz_sales_copy
+        description: sales of Greenweez / we have on row per product_id found in each orders_id
+        loaded_at_field: date_date
+        columns:
+           - name: date_date
+             description: date of purchase
+           - name: orders_id
+             description: ID of the order
+           - name: pdt_id
+             description: ID of the product
+           - name: revenue
+             description: Order revenue
+           - name: quantity
+             description: order quantity 
+             tests:
+               - unique:
+                  column_name: "(orders_id || '-' || pdt_id)"
+             # OR ## IF DBT UTILS IS INSTALLED 
+               - dbt_utils.unique_combination_of_columns:
+                   combination_of_columns:
+                   - orders_id
+                   - pdt_id 
+               
+      - name: ship
+        identifier: raw_gz_ship_copy
+        description: shipping at Greenweez
+        loaded_at_field: orders_id
+        columns:
+        - name: orders_id
+          description: id of the each order
+        - name: shipping_fee
+          description: the cost of the shipping
+        - name: logCost
+          description: the cost of all logistics for each order
+        - name: ship_cost
+          description: the cost of each product shipping
+          tests: 
+          - not_null
+          - unique
+               
+
+
+    
