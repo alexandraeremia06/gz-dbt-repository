@@ -14,7 +14,55 @@ sources:
     tables:
       - name: product
         identifier: raw_gz_product_copy
+        description: The price each product_id cost in purchase_price
+        columns:
+           - name: products_id
+             description: ID of the product
+           - name: purchase_price
+             description: Selling price of each product
+             tests: 
+             - not_null
+             - unique
+             
       - name: sales
         identifier: raw_gz_sales_copy
+        description: sales of Greenweez / we have on row per product_id found in each orders_id
+        loaded_at_field: date_date
+        columns:
+           - name: date_date
+             description: date of purchase
+           - name: orders_id
+             description: ID of the order
+           - name: products_id
+             description: ID of the product
+           - name: revenue
+             description: Order revenue
+             tests:
+               - dbt_utils.unique_combination_of_columns:
+                   orders_id : 
+                   - not - not_null
+                   products_id: 
+                   - not_null
+                   
+        
+               
       - name: ship
         identifier: raw_gz_ship_copy
+        description: shipping at Greenweez
+        loaded_at_field: orders_id
+        columns:
+        - name: orders_id
+          description: id of the each order
+        - name: shipping_fee
+          description: the cost of the shipping
+        - name: logCost
+          description: the cost of all logistics for each order
+        - name: ship_cost
+          description: the cost of each product shipping
+          tests: 
+          - not_null
+          - unique
+               
+
+
+    
