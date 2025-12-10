@@ -1,0 +1,20 @@
+ # schema.yml
+
+ version: 2
+
+ sources:
+   - name: 'gz_raw_data'
+     database: data-analytics-ae.gz_raw_data
+     schema: gz_raw_data
+     loader: bigquery
+     description: test
+     freshness:
+       warn_after: {count: 12., period: hour}
+       error_after: {count: 24, period: hour}
+     tables:
+       - name: product
+         identifier: raw_gz_product_copy
+       - name: sales
+         identifier: raw_gz_sales_copy
+       - name: ship
+         identifier: raw_gz_ship_copy
