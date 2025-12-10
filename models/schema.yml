@@ -1,8 +1,8 @@
  # schema.yml
 
- version: 2
+version: 2
 
- sources:
+sources:
    - name: 'gz_raw_data'
      database: data-analytics-ae.gz_raw_data
      schema: gz_raw_data
