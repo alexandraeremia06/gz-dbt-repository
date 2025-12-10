@@ -3,8 +3,8 @@
 version: 2
 
 sources:
-   - name: 'gz_raw_data'
-     database: data-analytics-ae.gz_raw_data
+   - name: gz_raw_data
+     database: data-analytics-ae
      schema: gz_raw_data
      loader: bigquery
      description: test
