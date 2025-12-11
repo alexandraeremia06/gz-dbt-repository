@@ -55,8 +55,81 @@ sources:
           description: the cost of each product shipping
           tests: 
           - not_null
-      
-               
 
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: adwords campaign data
+        loaded_at_field: date_date
+        columns:       
+        - name: paid_source
+          description: Adwords
+        - name: campaign_key
+          description: the code/key of each campaign per date
+        - name: camPGN_name
+          description: name of each campaign
+        - name: ads_cost
+          description: the cost of each campaign 
+        - name: impression
+          description: number of impressions per campaign
+        - name: click
+          description: nb of clicks per campaign
+          
+          
+      - name: bing
+        identifier: raw_gz_bing
+        description: bing campaign data
+        loaded_at_field: date_date
+        columns:       
+        - name: paid_source
+          description: Bing
+        - name: campaign_key
+          description: the code/key of each campaign per date
+        - name: camPGN_name
+          description: name of each campaign
+        - name: ads_cost
+          description: the cost of each campaign 
+        - name: impression
+          description: number of impressions per campaign
+        - name: click
+          description: nb of clicks per campaign   
+        
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: criteo campaign data
+        loaded_at_field: date_date
+        columns:       
+        - name: paid_source
+          description: Criteo
+        - name: campaign_key
+          description: the code/key of each campaign per date
+        - name: camPGN_name
+          description: name of each campaign
+        - name: ads_cost
+          description: the cost of each campaign 
+        - name: impression
+          description: number of impressions per campaign
+        - name: click
+          description: nb of clicks per campaign   
 
-    
+      - name: facebook
+        identifier:  raw_gz_facebook
+        description: facebook campaign data
+        loaded_at_field: date_date
+        columns:       
+        - name: paid_source
+          description: Facebook
+        - name: campaign_key
+          description: the code/key of each campaign per date
+        - name: camPGN_name
+          description: name of each campaign
+        - name: ads_cost
+          description: the cost of each campaign 
+        - name: impression
+          description: number of impressions per campaign
+        - name: click
+          description: nb of clicks per campaign   
+
+SELECT
+    camPGN_name as campaign_name,
+    cast(ads_cost as float64) as ads_cost
+from {{ source('stg_raw_adwords', 'raw_gz_adwords') }} 
