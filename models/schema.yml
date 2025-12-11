@@ -19,7 +19,6 @@ sources:
              description: Selling price of each product
              tests: 
              - not_null
-             - unique
              
       - name: sales
         identifier: raw_gz_sales_copy
@@ -36,14 +35,10 @@ sources:
              description: Order revenue
            - name: quantity
              description: order quantity 
-             tests:
+        tests:
                - unique:
                   column_name: "(orders_id || '-' || pdt_id)"
              # OR ## IF DBT UTILS IS INSTALLED 
-               - dbt_utils.unique_combination_of_columns:
-                   combination_of_columns:
-                   - orders_id
-                   - pdt_id 
                
       - name: ship
         identifier: raw_gz_ship_copy
@@ -60,7 +55,7 @@ sources:
           description: the cost of each product shipping
           tests: 
           - not_null
-          - unique
+      
                
 
 
