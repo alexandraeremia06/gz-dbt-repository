@@ -1,4 +1,3 @@
-{{ config(materialized = 'view') }}
 
 -- STEP 1: Rebuild per-order data exactly like step 4
 
